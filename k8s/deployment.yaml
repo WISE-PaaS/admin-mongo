@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: admin-mongo
+  labels:
+    component: mongo-client
+    tool: admin-mongo
+spec:
+  replicas: 1
+  revisionHistoryLimit: 0
+  selector:
+    matchLabels:
+      component: mongo-client
+      tool: admin-mongo
+  template:
+    metadata:
+      labels:
+        component: mongo-client
+        tool: admin-mongo
+    spec:
+      containers:
+        - name: admin-mongo
+          image: mrvautin/adminmongo
+          ports:
+            - containerPort: 1234
+          env:
+          - name: HOST
+            value: "0.0.0.0"
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+              ephemeral-storage: 64Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
